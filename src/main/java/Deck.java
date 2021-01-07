@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * The Deck class represents a shuffled deck of cards.
@@ -30,7 +31,27 @@ public class Deck {
 	 * @param values is an array containing all of the card point values.
 	 */
 	public Deck(String[] ranks, String[] suits, int[] values) {
-		// YOUR CODE HERE
+		cards = new ArrayList<>();
+		for (String rank : ranks) {
+			for (String suit : suits) {
+				cards.add(new Card(rank, suit, getPointValue(rank)));
+			}
+		}
+		this.size =  cards.size();
+	}
+
+	private int getPointValue(String rank) {
+		if (rank.equalsIgnoreCase("king") || rank.equalsIgnoreCase("queen") || rank.equalsIgnoreCase("jack")) {
+			return 0;
+		} else if (rank.equalsIgnoreCase("ace")) {
+			return 1;
+		} else {
+			try {
+				return Integer.parseInt(rank);
+			} catch (Exception e) {
+				return 0;
+			}
+		}
 	}
 
 	/**
@@ -38,8 +59,7 @@ public class Deck {
 	 * @return true if this deck is empty, false otherwise.
 	 */
 	public boolean isEmpty() {
-        // YOUR CODE HERE
-        return false;
+        return size == 0;
 	}
 
 	/**
@@ -47,8 +67,7 @@ public class Deck {
 	 * @return the number of undealt cards in this deck.
 	 */
 	public int getSize() {
-        // YOUR CODE HERE
-        return -1;
+        return size;
 	}
 
 	/**
@@ -57,8 +76,8 @@ public class Deck {
 	 *         previously dealt.
 	 */
 	public Card deal() {
-		// YOUR CODE HERE
-        return null;
+		size--;
+		return (size != -1) ? cards.get(size) : null;
 	}
 
 	/**
